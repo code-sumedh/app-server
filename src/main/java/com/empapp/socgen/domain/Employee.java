@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Document(collection = "user")
+@Document(collection = "employees")
 public class Employee {
 
 	@Id
@@ -34,7 +34,6 @@ public class Employee {
 	@Past(message = "Must be a past date")
 	private LocalDateTime dob;
 
-	
 	@GenderValidator("A")
 	private Gender gender;
 

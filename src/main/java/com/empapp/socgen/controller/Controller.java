@@ -16,7 +16,7 @@ import com.empapp.socgen.domain.Employee;
 import com.empapp.socgen.service.EmployeeService;
 
 /**
- * Endpoint controller class to do all CRUD for Employee repo using service
+ * End-point controller class to do all CRUD for Employee repo using service
  * logic.
  * 
  * @author sumedh
