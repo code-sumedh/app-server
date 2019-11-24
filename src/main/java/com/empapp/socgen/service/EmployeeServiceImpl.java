@@ -1,6 +1,7 @@
 package com.empapp.socgen.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -88,6 +89,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private Employee convertToDomain(EmployeeDto emp) {
 		return modelMapper.map(emp, Employee.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.empapp.socgen.service.EmployeeService#getEmployeeById(java.lang.
+	 * String)
+	 */
+	@Override
+	public EmployeeDto getEmployeeById(String id) {
+		try {
+			Optional<Employee> empObj = empRepo.findById(id);
+			if (empObj.isPresent()) {
+				return convertToDto(empObj.get());
+			} else {
+				throw new EmpException("No Employee data found for this match");
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.empapp.socgen.service.EmployeeService#deleteEmployeeById(java.lang.
+	 * String)
+	 */
+	@Override
+	public String deleteEmployeeById(String id) {
+		try {
+			empRepo.deleteById(id);
+			return "Deleted successfully..!";
+		} catch (Exception e) {
+			throw new EmpException("Could not delete at this moment, Please try again.");
+		}
 	}
 
 }

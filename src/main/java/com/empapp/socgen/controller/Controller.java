@@ -5,8 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,24 @@ public class Controller {
 	@PatchMapping(path = "", produces = "application/json")
 	public EmployeeDto patchEmployeeObject(@RequestBody @Valid EmployeeDto emp) {
 		return employeeService.updateEmployee(emp);
+	}
+
+	/**
+	 * @author sumedh
+	 * @return
+	 */
+	@GetMapping(path = "get-emp", produces = "application/json")
+	public EmployeeDto getEmployeeObject(@PathVariable("id") String id) {
+		return employeeService.getEmployeeById(id);
+	}
+	
+	/**
+	 * @author sumedh
+	 * @return
+	 */
+	@DeleteMapping(path = "delete-emp", produces = "application/json")
+	public String deleteEmployeeObject(@PathVariable("id") String id) {
+		return employeeService.deleteEmployeeById(id);
 	}
 
 }

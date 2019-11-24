@@ -33,4 +33,18 @@ public interface EmployeeService {
 	 */
 	EmployeeDto updateEmployee(EmployeeDto emp);
 
+	/**
+	 * @author sumedh
+	 * @param id
+	 * @return
+	 */
+	EmployeeDto getEmployeeById(String id);
+
+	/**
+	 * @author sumedh
+	 * @param id
+	 * @return
+	 */
+	String deleteEmployeeById(String id);
+
 }
