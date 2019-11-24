@@ -1,5 +1,6 @@
 package com.empapp.socgen;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,20 +21,25 @@ public class SocGenApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		 SpringApplication.run(SocGenApplication.class, args);
-//		new SpringApplicationBuilder(SocGenApplication.class).build().run();
+		SpringApplication.run(SocGenApplication.class, args);
+		// new SpringApplicationBuilder(SocGenApplication.class).build().run();
 	}
 
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
-	
+
 	@Bean
 	public LocalValidatorFactoryBean validator(MessageSource messageSource) {
-	    LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
-	    validatorFactoryBean.setValidationMessageSource(messageSource);
-	    return validatorFactoryBean;
+		LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+		validatorFactoryBean.setValidationMessageSource(messageSource);
+		return validatorFactoryBean;
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 }

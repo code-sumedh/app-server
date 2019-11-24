@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.empapp.socgen.domain.Employee;
+import com.empapp.socgen.dto.EmployeeDto;
 import com.empapp.socgen.service.EmployeeService;
 
 /**
@@ -34,7 +34,7 @@ public class Controller {
 	 * @return
 	 */
 	@GetMapping(path = "", produces = "application/json")
-	public List<Employee> getEmployees() {
+	public List<EmployeeDto> getEmployees() {
 		return employeeService.getEmployees();
 	}
 
@@ -43,7 +43,7 @@ public class Controller {
 	 * @return
 	 */
 	@PutMapping(path = "", produces = "application/json")
-	public Employee saveEmployee(@RequestBody @Valid Employee emp) {
+	public EmployeeDto saveEmployee(@RequestBody @Valid EmployeeDto emp) {
 		return employeeService.saveEmployee(emp);
 	}
 
@@ -52,7 +52,7 @@ public class Controller {
 	 * @return
 	 */
 	@PatchMapping(path = "", produces = "application/json")
-	public Employee patchEmployeeObject(@RequestBody @Valid Employee emp) {
+	public EmployeeDto patchEmployeeObject(@RequestBody @Valid EmployeeDto emp) {
 		return employeeService.updateEmployee(emp);
 	}
 

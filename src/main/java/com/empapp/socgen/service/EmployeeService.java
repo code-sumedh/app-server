@@ -2,9 +2,7 @@ package com.empapp.socgen.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import com.empapp.socgen.domain.Employee;
+import com.empapp.socgen.dto.EmployeeDto;
 
 /**
  * The EmployeeService exposes all abstract methods which are related to
@@ -19,20 +17,20 @@ public interface EmployeeService {
 	 * @author sumedh
 	 * @return employees
 	 */
-	List<Employee> getEmployees();
+	List<EmployeeDto> getEmployees();
 
 	/**
 	 * @author sumedh
 	 * @param emp
 	 * @return
 	 */
-	Employee saveEmployee(Employee emp);
+	EmployeeDto saveEmployee(EmployeeDto emp);
 
 	/**
 	 * @author sumedh
 	 * @param emp
 	 * @return
 	 */
-	Employee updateEmployee(@Valid Employee emp);
+	EmployeeDto updateEmployee(EmployeeDto emp);
 
 }

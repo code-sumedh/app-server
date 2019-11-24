@@ -1,14 +1,17 @@
 package com.empapp.socgen.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.empapp.socgen.domain.Employee;
+import com.empapp.socgen.dto.EmployeeDto;
 import com.empapp.socgen.exception.EmpException;
 import com.empapp.socgen.repository.EmpRepo;
 
@@ -23,6 +26,9 @@ import com.empapp.socgen.repository.EmpRepo;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
+	private ModelMapper modelMapper;
+
+	@Autowired
 	private EmpRepo empRepo;
 
 	/*
@@ -31,10 +37,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * @see com.empapp.service.EmployeeService#getEmployees()
 	 */
 	@Override
-	public List<Employee> getEmployees() {
+	public List<EmployeeDto> getEmployees() {
 		try {
 			// Repository call to find all Employees
-			return empRepo.findAll();
+
+			return empRepo.findAll().stream().map(emp -> convertToDto(emp)).collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new EmpException("Error while fetching Employees data");
 		}
@@ -48,10 +55,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * domain.Employee)
 	 */
 	@Override
-	public Employee saveEmployee(Employee emp) {
+	public EmployeeDto saveEmployee(EmployeeDto emp) {
 		try {
 			// New employee object is storing by repository
-			return empRepo.save(emp);
+			return convertToDto(empRepo.save(convertToDomain(emp)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new EmpException("Error while saving Employee data");
@@ -65,14 +72,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * socgen.domain.Employee)
 	 */
 	@Override
-	public Employee updateEmployee(@Valid Employee emp) {
+	public EmployeeDto updateEmployee(@Valid EmployeeDto emp) {
 		try {
-			return empRepo.save(emp);
+			return convertToDto(empRepo.save(convertToDomain(emp)));
 		} catch (OptimisticLockingFailureException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new EmpException("Error while updating Employee data");
 		}
+	}
+
+	private EmployeeDto convertToDto(Employee emp) {
+		return modelMapper.map(emp, EmployeeDto.class);
+	}
+
+	private Employee convertToDomain(EmployeeDto emp) {
+		return modelMapper.map(emp, Employee.class);
 	}
 
 }

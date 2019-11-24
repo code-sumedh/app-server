@@ -1,36 +1,37 @@
-package com.empapp.socgen.domain;
+package com.empapp.socgen.dto;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
-@Document(collection = "employees")
-public class Employee {
+import com.empapp.socgen.domain.Gender;
+import com.empapp.socgen.domain.GenderValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-	@Id
+public class EmployeeDto {
+
 	private String id;
-	@Version
 	private Long version;
 
+	@NotBlank(message = "First name is mandatory")
 	private String firstName;
 
+	@NotBlank(message = "Last name is mandatory")
 	private String lastName;
 
+	@NotBlank(message = "Department name is mandatory")
 	private String department;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	@Past(message = "Must be a past date")
 	private LocalDateTime dob;
 
 	@GenderValidator("A")
 	private Gender gender;
 
-	@CreatedDate
 	private LocalDateTime createdDate;
 
-	@LastModifiedDate
 	private LocalDateTime lastModifiedDate;
 
 	public String getId() {
@@ -136,7 +137,7 @@ public class Employee {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Employee other = (Employee) obj;
+		EmployeeDto other = (EmployeeDto) obj;
 		if (createdDate == null) {
 			if (other.createdDate != null)
 				return false;
