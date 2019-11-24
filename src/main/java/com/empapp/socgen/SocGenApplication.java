@@ -22,7 +22,6 @@ public class SocGenApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SocGenApplication.class, args);
-		// new SpringApplicationBuilder(SocGenApplication.class).build().run();
 	}
 
 	@Bean
