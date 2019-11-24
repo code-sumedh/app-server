@@ -1,7 +1,9 @@
 package com.empapp.socgen.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -9,10 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//@Getter
-//@Setter
-//@Data
-//@ToString
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Document(collection = "user")
 public class Employee {
 
@@ -20,10 +20,22 @@ public class Employee {
 	private String id;
 	@Version
 	private Long version;
+
+	@NotBlank(message = "First name is mandatory")
 	private String firstName;
+
+	@NotBlank(message = "Last name is mandatory")
 	private String lastName;
+
+	@NotBlank(message = "Department name is mandatory")
 	private String department;
-	private LocalDate dob;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	@Past(message = "Must be a past date")
+	private LocalDateTime dob;
+
+	
+	@GenderValidator("A")
 	private Gender gender;
 
 	@CreatedDate
@@ -72,11 +84,11 @@ public class Employee {
 		this.department = department;
 	}
 
-	public LocalDate getDob() {
+	public LocalDateTime getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(LocalDateTime dob) {
 		this.dob = dob;
 	}
 
