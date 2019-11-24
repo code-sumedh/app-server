@@ -1,17 +1,14 @@
 ===========================================================
 
-## Employee Registration Project with Springboot CRUD Rest Api with MongoDB
-
-
-### Build and Deploy the Project
+## Employee Registration Project with Spring boot CRUD Rest Api with MongoDB
 ```
 
 Following Methods available:
-1.  GET /api/getEmployees -  Get all employee details
-2.  GET /api/getEmployee/{employee_id} - Get specific employee detail.
-3.  POST /api/createEmployee with data - Add New Employee to MongoDB
-4.  PUT /api/updateEmployee/{employee_id} with data- Update existing employee
-5.  DELETE /api/deleteEmployee/{employee_id} - Remove employee details from MongoDB.
+1.  GET /api/employees -  Get all employee details
+2.  GET /api/employees/get-emp/{id} - Get specific employee detail.
+3.  POST /api/employees with data - Add New Employee to MongoDB
+4.  PATCH /api/employees with data- Update existing employee
+5.  DELETE /api/employees/delete-emp/{id} - Remove employee details from MongoDB.
 
 # Prequisites
 1.  Have Maven downloded and is in Path.
@@ -31,4 +28,4 @@ Following Methods available:
 
 This is a Spring Boot project, so you can deploy it by simply using the main class: `SocGenApplication.java`
     ```
-5.  Go to browser type http://localhost:8080/empapp
+5.  Go to browser type http://localhost:8080/api/employees

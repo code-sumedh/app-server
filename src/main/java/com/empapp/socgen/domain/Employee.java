@@ -8,6 +8,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.empapp.socgen.annotation.GenderValidator;
+
 @Document(collection = "employees")
 public class Employee {
 

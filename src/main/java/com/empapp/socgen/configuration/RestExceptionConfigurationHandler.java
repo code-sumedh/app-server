@@ -1,6 +1,7 @@
-package com.empapp.socgen.exception;
+package com.empapp.socgen.configuration;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
@@ -20,25 +21,20 @@ import org.springframework.web.context.request.WebRequest;
  *
  */
 @RestControllerAdvice
-public class RestExceptionHandler {
+public class RestExceptionConfigurationHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleAllExceptionMethod(Exception ex, WebRequest requset) {
 
 		GlobalExceptionPojo globalExcPojo = new GlobalExceptionPojo();
-		ex.printStackTrace();
 
 		// Handle All Field Validation Errors
 		if (ex instanceof MethodArgumentNotValidException) {
-			StringBuilder sb = new StringBuilder();
 			List<FieldError> fieldErrors = ((MethodArgumentNotValidException) ex).getBindingResult().getFieldErrors();
-			for (FieldError fieldError : fieldErrors) {
-				sb.append(fieldError.getDefaultMessage());
-				sb.append(";");
-			}
-			globalExcPojo.setMessage(sb.toString());
-		}
-		if (ex instanceof OptimisticLockingFailureException) {
+			fieldErrors.stream().filter(error -> Objects.nonNull(error.getDefaultMessage())).findFirst()
+					.ifPresent(msg -> globalExcPojo.setMessage(msg.getDefaultMessage()));
+
+		} else if (ex instanceof OptimisticLockingFailureException) {
 			globalExcPojo.setMessage(
 					"The record you are working on has been modified by another user. Changes you have made have not been saved, please resubmit.");
 		} else {

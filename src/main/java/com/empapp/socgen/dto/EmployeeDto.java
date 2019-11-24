@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
+import com.empapp.socgen.annotation.GenderValidator;
 import com.empapp.socgen.domain.Gender;
-import com.empapp.socgen.domain.GenderValidator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EmployeeDto {
