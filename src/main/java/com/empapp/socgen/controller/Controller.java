@@ -15,6 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empapp.socgen.domain.Employee;
 import com.empapp.socgen.service.EmployeeService;
 
+/**
+ * Endpoint controller class to do all CRUD for Employee repo using service
+ * logic.
+ * 
+ * @author sumedh
+ *
+ */
 @RestController
 @RequestMapping(path = "/employees")
 public class Controller {
@@ -22,17 +29,29 @@ public class Controller {
 	@Autowired
 	private EmployeeService employeeService;
 
-	@GetMapping(path="", produces = "application/json")
+	/**
+	 * @author sumedh
+	 * @return
+	 */
+	@GetMapping(path = "", produces = "application/json")
 	public List<Employee> getEmployees() {
 		return employeeService.getEmployees();
 	}
 
-	@PutMapping(path="", produces = "application/json")
+	/**
+	 * @author sumedh
+	 * @return
+	 */
+	@PutMapping(path = "", produces = "application/json")
 	public Employee saveEmployee(@RequestBody @Valid Employee emp) {
 		return employeeService.saveEmployee(emp);
 	}
-	
-	@PatchMapping(path="", produces ="application/json")
+
+	/**
+	 * @author sumedh
+	 * @return
+	 */
+	@PatchMapping(path = "", produces = "application/json")
 	public Employee patchEmployeeObject(@RequestBody @Valid Employee emp) {
 		return employeeService.updateEmployee(emp);
 	}
