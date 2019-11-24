@@ -2,6 +2,8 @@ package com.empapp.socgen.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.empapp.socgen.domain.Employee;
 
 /**
@@ -21,9 +23,16 @@ public interface EmployeeService {
 
 	/**
 	 * @author sumedh
-	 * @param emp 
+	 * @param emp
 	 * @return
 	 */
 	Employee saveEmployee(Employee emp);
+
+	/**
+	 * @author sumedh
+	 * @param emp
+	 * @return
+	 */
+	Employee updateEmployee(@Valid Employee emp);
 
 }

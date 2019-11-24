@@ -2,7 +2,10 @@ package com.empapp.socgen.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.empapp.socgen.domain.Employee;
@@ -19,10 +22,6 @@ import com.empapp.socgen.repository.EmpRepo;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-	EmployeeServiceImpl() {
-		System.out.println("Hey I am in EmployeeServiceImpl, I am a constructor");
-	}
-
 	@Autowired
 	private EmpRepo empRepo;
 
@@ -34,21 +33,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getEmployees() {
 		try {
-			System.out.println("empRepo.findAll() sizeis : " + empRepo.findAll().size());
+			// Repository call to find all Employees
 			return empRepo.findAll();
 		} catch (Exception e) {
 			throw new EmpException("Error while fetching Employees data");
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.empapp.socgen.service.EmployeeService#saveEmployee(com.empapp.socgen.
+	 * domain.Employee)
+	 */
 	@Override
 	public Employee saveEmployee(Employee emp) {
 		try {
-			System.out.println("In save impl " + emp);
+			// New employee object is storing by repository
 			return empRepo.save(emp);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new EmpException("Error while saving Employee data");
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.empapp.socgen.service.EmployeeService#updateEmployee(com.empapp.
+	 * socgen.domain.Employee)
+	 */
+	@Override
+	public Employee updateEmployee(@Valid Employee emp) {
+		try {
+			return empRepo.save(emp);
+		} catch (OptimisticLockingFailureException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new EmpException("Error while updating Employee data");
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.empapp.socgen.exception;
 
 import java.util.List;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,11 +21,12 @@ import org.springframework.web.context.request.WebRequest;
  */
 @RestControllerAdvice
 public class RestExceptionHandler {
-	
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleAllExceptionMethod(Exception ex, WebRequest requset) {
 
 		GlobalExceptionPojo globalExcPojo = new GlobalExceptionPojo();
+		ex.printStackTrace();
 
 		// Handle All Field Validation Errors
 		if (ex instanceof MethodArgumentNotValidException) {
@@ -35,6 +37,10 @@ public class RestExceptionHandler {
 				sb.append(";");
 			}
 			globalExcPojo.setMessage(sb.toString());
+		}
+		if (ex instanceof OptimisticLockingFailureException) {
+			globalExcPojo.setMessage(
+					"The record you are working on has been modified by another user. Changes you have made have not been saved, please resubmit.");
 		} else {
 			globalExcPojo.setMessage(ex.getLocalizedMessage());
 		}

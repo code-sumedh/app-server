@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,6 @@ import com.empapp.socgen.service.EmployeeService;
 @RequestMapping(path = "/employees")
 public class Controller {
 
-	public Controller() {
-		System.out.println("Hey");
-	}
-
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -33,6 +30,11 @@ public class Controller {
 	@PutMapping(path="", produces = "application/json")
 	public Employee saveEmployee(@RequestBody @Valid Employee emp) {
 		return employeeService.saveEmployee(emp);
+	}
+	
+	@PatchMapping(path="", produces ="application/json")
+	public Employee patchEmployeeObject(@RequestBody @Valid Employee emp) {
+		return employeeService.updateEmployee(emp);
 	}
 
 }
