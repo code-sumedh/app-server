@@ -1,5 +1,6 @@
 package com.empapp.socgen.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,7 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try {
 			// Repository call to find all Employees
 
-			return empRepo.findAll().stream().map(emp -> convertToDto(emp)).collect(Collectors.toList());
+			return empRepo.findAll().stream().map(emp -> convertToDto(emp))
+					.sorted(Comparator.comparing(EmployeeDto::getFirstName)).collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new EmpException("Error while fetching Employees data");
 		}
@@ -124,6 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			empRepo.deleteById(id);
 			return "Deleted successfully..!";
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new EmpException("Could not delete at this moment, Please try again.");
 		}
 	}

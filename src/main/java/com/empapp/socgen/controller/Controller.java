@@ -3,6 +3,7 @@ package com.empapp.socgen.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,7 +63,7 @@ public class Controller {
 	 * @author sumedh
 	 * @return
 	 */
-	@GetMapping(path = "get-emp", produces = "application/json")
+	@GetMapping(path = "get-emp/{id}", produces = "application/json")
 	public EmployeeDto getEmployeeObject(@PathVariable("id") String id) {
 		return employeeService.getEmployeeById(id);
 	}
@@ -71,7 +72,7 @@ public class Controller {
 	 * @author sumedh
 	 * @return
 	 */
-	@DeleteMapping(path = "delete-emp", produces = "application/json")
+	@DeleteMapping(path = "delete-emp/{id}")
 	public String deleteEmployeeObject(@PathVariable("id") String id) {
 		return employeeService.deleteEmployeeById(id);
 	}
